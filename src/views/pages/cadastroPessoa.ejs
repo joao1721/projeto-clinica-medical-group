@@ -1,0 +1,122 @@
+<body>
+    <div class="container mt-5">
+        <h2>Cadastro de Pessoa</h2>
+        <% if (typeof senhaGerada !=='undefined' ) { %>
+            <div class="alert alert-success">
+                Cadastro realizado com sucesso! Sua senha é: <strong>
+                    <%= senhaGerada %>
+                </strong>
+            </div>
+            <% } %>
+                <form id="cadastroPessoaForm" method="POST" action="/pessoa">
+                    <!-- Dados Pessoais -->
+                    <div class="mb-3">
+                        <label for="cpf" class="form-label">CPF</label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="data_nasc" class="form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="genero" class="form-label">Gênero</label>
+                        <select class="form-control" id="genero" name="genero" required>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <!-- Endereço -->
+                    <h3>Endereço</h3>
+                    <div class="mb-3">
+                        <label for="logradouro" class="form-label">Logradouro</label>
+                        <input type="text" class="form-control" id="logradouro" name="endereco[0][logradouro]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bairro" class="form-label">Bairro</label>
+                        <input type="text" class="form-control" id="bairro" name="endereco[0][bairro]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <input type="text" class="form-control" id="estado" name="endereco[0][estado]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Número</label>
+                        <input type="text" class="form-control" id="numero" name="endereco[0][numero]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="complemento" class="form-label">Complemento</label>
+                        <input type="text" class="form-control" id="complemento" name="endereco[0][complemento]">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cep" class="form-label">CEP</label>
+                        <input type="text" class="form-control" id="cep" name="endereco[0][cep]" required>
+                    </div>
+
+                    <!-- Telefone -->
+                    <h3>Telefone</h3>
+                    <div class="mb-3">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" id="telefone" name="telefone[0][numero]" required>
+                    </div>
+
+                    <!-- Dados do Funcionário -->
+                    <div id="funcionarioSection">
+                        <h3>Dados do Funcionário</h3>
+                        <div class="mb-3">
+                            <label for="data_admissao" class="form-label">Data de Admissão</label>
+                            <input type="date" class="form-control" id="data_admissao"
+                                name="funcionario[0][data_admissao]">
+                        </div>
+                        <div class="mb-3">
+                            <label for="crm" class="form-label">CRM</label>
+                            <input type="text" class="form-control" id="crm" name="funcionario[0][crm]">
+                        </div>
+                    </div>
+
+                    <!-- Especialidades -->
+                    <div class="mb-3">
+                        <label for="especialidades" class="form-label">Especialidades:</label>
+                        <select class="form-control" id="especialidades" name="especialidades[]" multiple required>
+                            <% if (especialidades !== 'undefined') { %>
+                                <% especialidades.forEach(function(especialidade) { %>
+                                    <option value="<%= especialidade.id %>">
+                                        <%= especialidade.desc_especialidade %>
+                                    </option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+        
+
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+    </div>
+
+    
+</body>
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/buscarEspecialidades')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('especialidades');
+                data.forEach(especialidade => {
+                    const option = document.createElement('option');
+                    option.value = especialidade.id;
+                    option.text = especialidade.desc_especialidade; // Certifique-se de que o campo é 'desc_especialidade'
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar especialidades:', error));
+    });
+</script> -->

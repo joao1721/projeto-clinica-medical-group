@@ -1,0 +1,68 @@
+<div class="container mt-5">
+    <h2>Agendamento de Consulta</h2>
+    <form id="agendamentoConsultaForm" method="POST" action="/consulta">
+               
+                <div class="mb-3">
+                    <label for="cpf_paciente" class="form-label">CPF do Paciente</label>
+                    <input type="text" class="form-control" id="cpf_paciente" name="cpf_paciente" required>
+                </div>
+
+        <div class="mb-3">
+            <label for="especialidadeSelect" class="form-label">Especialidade</label>
+            <select class="form-control" id="especialidadeSelect" name="especialidade" required>
+                <% if (especialidades && especialidades.length) { %>
+                    <% especialidades.forEach(especialidade => { %>
+                        <option value="<%= especialidade.id %>"><%= especialidade.desc_especialidade %></option>
+                    <% }) %>
+                <% } else { %>
+                    <option value="" disabled selected>Nenhuma especialidade disponível</option>
+                <% } %>
+            </select>
+            
+        </div>
+
+        <div class="mb-3">
+            <label for="data_hora" class="form-label">Data e Hora da Consulta</label>
+            <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="medico" class="form-label">Médico</label>
+            <input class="form-control" id="medico" name="medico" required>
+            </input>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Agendar Consulta</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cpfPacienteInput = document.getElementById('cpf_paciente');
+        cpfPacienteInput.addEventListener('change', verificarCPF);
+
+        function verificarCPF() {
+            const cpf = cpfPacienteInput.value;
+
+            fetch('/verificarcpf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cpf })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    console.log('CPF válido e cadastrado');
+                } else {
+                    console.log('CPF inválido ou não cadastrado');
+                    
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao verificar CPF:', error);
+            });
+        }
+    });
+</script>

@@ -1,0 +1,18 @@
+<body>
+    <div class="container mt-5">
+        <h1>Prontuário</h1>
+        <form id="cadastrarProntuarioForm" action="/cadastrarProntuario" method="POST">
+
+            <label class="form-label" for="diagnostico">Diagnostico:</label>
+            <input class="form-control type="text" id="diagnostico" name="diagnostico" required>
+
+            <label class="form-label" for="medicacao">Medicacao:</label>
+            <input class="form-control type="text" id="medicacao" name="medicacao" required>
+
+            <label class="form-label" for="consulta_id">Consulta_Id:</label>
+            <input class="form-control type="number" id="consulta_id" name="consulta_id" required>
+
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
